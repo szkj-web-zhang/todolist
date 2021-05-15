@@ -40,50 +40,51 @@ const List = (): JSX.Element => {
      * @constant
      * @returns {string,void}
      */
-    const [edited, setEdited] = useState(true);
-
+    const [edited, setEdited] = useState(-1);
     /**
      * get ref of input
      * @constant
      * @returns {string}
      */
-    const editedBox = useRef<HTMLInputElement>(null);
-    useEffect(() => {
-        editedBox.current?.focus();
-    }, [edited]);
     /* <------------------------------------ **** HOOKS END **** ------------------------------------ */
     /* <------------------------------------ **** PARAMETER START **** ------------------------------------ */
     /************* This section will include this component parameter *************/
     /* <------------------------------------ **** PARAMETER END **** ------------------------------------ */
     /* <------------------------------------ **** FUNCTION START **** ------------------------------------ */
     /************* This section will include this component general function *************/
+
     /* <------------------------------------ **** FUNCTION END **** ------------------------------------ */
     return (
         <Row>
-            {todoArray.map((todoObj) =>
-                edited ? (
+            {todoArray.map((todoObj) => (
+                <div key={todoObj.id}>
                     <div
-                        key={todoObj.id}
+                        onBlur={() => {
+                            setEdited(-1);
+                        }}
                         onClick={() => dispatch(selectTodoAction(todoObj.id))}
                         onDoubleClick={() => {
-                            setEdited(false);
+                            setEdited(todoObj.id);
                         }}
+                        style={{ display: edited !== todoObj.id ? 'block' : 'none' }}
                         className={`todo-item ${todoObj.select ? 'active' : ''}`}
                     >
                         {todoObj.msg}
                     </div>
-                ) : (
                     <input
-                        ref={editedBox}
-                        type="text"
-                        defaultValue={todoObj.msg}
-                        onBlur={() => {
-                            setEdited(true);
+                        style={{
+                            display: edited === todoObj.id ? 'block' : 'none',
+                            width: '100%',
                         }}
-                        key={todoObj.id}
+                        type="text"
+                        onBlur={() => {
+                            setEdited(-1);
+                            console.log('input:' + todoObj.msg);
+                        }}
+                        defaultValue={todoObj.msg}
                     />
-                ),
-            )}
+                </div>
+            ))}
         </Row>
     );
 };
