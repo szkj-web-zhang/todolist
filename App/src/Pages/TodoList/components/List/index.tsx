@@ -11,6 +11,7 @@ import { Row } from 'antd';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../../../../Store/rootReducer';
 import { selectTodoAction } from '../../../../Store/TodoList/actions';
+import { TodoItemType } from '../../../../Store/TodoList/actionTypes';
 
 /* <------------------------------------ **** DEPENDENCE IMPORT END **** ------------------------------------ */
 /* <------------------------------------ **** INTERFACE START **** ------------------------------------ */
@@ -41,11 +42,7 @@ const List = (): JSX.Element => {
      * @returns {string,void}
      */
     const [edited, setEdited] = useState(-1);
-    /**
-     * get ref of input
-     * @constant
-     * @returns {string}
-     */
+
     /* <------------------------------------ **** HOOKS END **** ------------------------------------ */
     /* <------------------------------------ **** PARAMETER START **** ------------------------------------ */
     /************* This section will include this component parameter *************/
@@ -67,11 +64,12 @@ const List = (): JSX.Element => {
                             setEdited(todoObj.id);
                         }}
                         style={{ display: edited !== todoObj.id ? 'block' : 'none' }}
-                        className={`todo-item ${todoObj.select ? 'active' : ''}`}
+                        className={`todo-item ${todoObj.select ? 'active' : '123'}`}
                     >
                         {todoObj.msg}
                     </div>
                     <input
+                        autoFocus
                         style={{
                             display: edited === todoObj.id ? 'block' : 'none',
                             width: '100%',

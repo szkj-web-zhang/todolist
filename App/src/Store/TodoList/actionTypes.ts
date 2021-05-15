@@ -52,7 +52,16 @@ interface removeTodoAction {
     type: typeof ACTION_TYPE.REMOVE_TODO;
 }
 
-export type TodoListActionTypes = addTodoAction | removeTodoAction | selectTodoAction;
+interface updateTodoAction {
+    type: typeof ACTION_TYPE.UPDATE_TODO;
+    payload: TodoItemType;
+}
+
+export type TodoListActionTypes =
+    | addTodoAction
+    | removeTodoAction
+    | selectTodoAction
+    | updateTodoAction;
 
 /**
  * This file is a todolistreducer file

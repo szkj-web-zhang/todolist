@@ -77,7 +77,7 @@ const Input: FC = (): JSX.Element => {
     /* <------------------------------------ **** FUNCTION END **** ------------------------------------ */
     return (
         <Row>
-            <input onChange={getInputValue} value={content} type="text" />
+            <input autoFocus onChange={getInputValue} value={content} type="text" />
             <button onClick={addTodoHnadler}>创建</button>
             <button onClick={removeTodoHnadler}>删除</button>
         </Row>

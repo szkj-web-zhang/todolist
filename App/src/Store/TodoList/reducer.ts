@@ -31,7 +31,15 @@ export default (state = initState, action: types.TodoListActionTypes): types.Tod
             return {
                 todoList: state.todoList.filter((todoObj) => !todoObj.select),
             };
-
+        case types.ACTION_TYPE.UPDATE_TODO:
+            return {
+                todoList: state.todoList.map((todoObj) => {
+                    if (todoObj.id === action.payload.id) {
+                        todoObj.msg = action.payload.msg;
+                    }
+                    return todoObj;
+                }),
+            };
         default:
             return state;
     }

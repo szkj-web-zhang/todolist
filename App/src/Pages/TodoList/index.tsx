@@ -11,6 +11,7 @@ import { Row } from 'antd';
 import Input from './components/Input';
 import List from './components/List';
 import './index.scss';
+import Text from '../Text/index';
 /* <------------------------------------ **** DEPENDENCE IMPORT END **** ------------------------------------ */
 /* <------------------------------------ **** INTERFACE START **** ------------------------------------ */
 /** This section will include all the interface for this tsx file */
@@ -37,6 +38,8 @@ const TodoList = (): JSX.Element => {
         <Row>
             <Input />
             <List />
+            <hr />
+            <Text />
         </Row>
     );
 };
