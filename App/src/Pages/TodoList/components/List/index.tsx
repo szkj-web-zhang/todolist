@@ -16,7 +16,6 @@ import {
     removeTodoAction,
 } from '../../../../Store/TodoList/actions';
 import { TodoItemType } from '../../../../Store/TodoList/actionTypes';
-import TodoList from '../..';
 
 /* <------------------------------------ **** DEPENDENCE IMPORT END **** ------------------------------------ */
 /* <------------------------------------ **** INTERFACE START **** ------------------------------------ */
