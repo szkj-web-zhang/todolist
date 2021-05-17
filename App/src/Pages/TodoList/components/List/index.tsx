@@ -6,12 +6,17 @@
  */
 /* <------------------------------------ **** DEPENDENCE IMPORT START **** ------------------------------------ */
 /** This section will include all the necessary dependence for this tsx file */
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Row } from 'antd';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../../../../Store/rootReducer';
-import { selectTodoAction } from '../../../../Store/TodoList/actions';
+import {
+    selectTodoAction,
+    updateTodoAction,
+    removeTodoAction,
+} from '../../../../Store/TodoList/actions';
 import { TodoItemType } from '../../../../Store/TodoList/actionTypes';
+import TodoList from '../..';
 
 /* <------------------------------------ **** DEPENDENCE IMPORT END **** ------------------------------------ */
 /* <------------------------------------ **** INTERFACE START **** ------------------------------------ */
@@ -37,12 +42,28 @@ const List = (): JSX.Element => {
     const dispatch = useDispatch();
 
     /**
-     * el is edit or not
+     * status of element is edit or not
      * @constant
-     * @returns {string,void}
+     * @returns {TodoItemType | number}
      */
-    const [edited, setEdited] = useState(-1);
+    const [edited, setEdited] = useState<TodoItemType | number>(-1);
 
+    /**
+     * msg to be changed
+     * @constant
+     * @returns {string}
+     */
+    const [newMsg, setTemMsg] = useState('');
+
+    /**
+     * judge value of input value
+     * @returns {string}
+     */
+    useEffect(() => {
+        if (edited !== -1) {
+            setTemMsg(() => (edited as TodoItemType).msg);
+        }
+    }, [edited]);
     /* <------------------------------------ **** HOOKS END **** ------------------------------------ */
     /* <------------------------------------ **** PARAMETER START **** ------------------------------------ */
     /************* This section will include this component parameter *************/
@@ -50,37 +71,44 @@ const List = (): JSX.Element => {
     /* <------------------------------------ **** FUNCTION START **** ------------------------------------ */
     /************* This section will include this component general function *************/
 
+    /**
+     * update msg and delete todolist when msg is empty
+     * @constant
+     * @returns {string}
+     */
+    const updateTodo = () => {
+        const newObj = { ...(edited as TodoItemType), msg: newMsg };
+        if (newObj.msg === '') {
+            dispatch(removeTodoAction());
+        } else {
+            dispatch(updateTodoAction(newObj));
+        }
+        setEdited(-1);
+    };
     /* <------------------------------------ **** FUNCTION END **** ------------------------------------ */
     return (
         <Row>
             {todoArray.map((todoObj) => (
                 <div key={todoObj.id}>
                     <div
-                        onBlur={() => {
-                            setEdited(-1);
-                        }}
                         onClick={() => dispatch(selectTodoAction(todoObj.id))}
                         onDoubleClick={() => {
-                            setEdited(todoObj.id);
+                            setEdited(todoObj);
                         }}
-                        style={{ display: edited !== todoObj.id ? 'block' : 'none' }}
-                        className={`todo-item ${todoObj.select ? 'active' : '123'}`}
+                        style={{
+                            display: (edited as TodoItemType).id !== todoObj.id ? 'block' : 'none',
+                        }}
+                        className={`todo-item ${todoObj.select ? 'active' : ''}`}
                     >
                         {todoObj.msg}
                     </div>
-                    <input
-                        autoFocus
-                        style={{
-                            display: edited === todoObj.id ? 'block' : 'none',
-                            width: '100%',
-                        }}
-                        type="text"
-                        onBlur={() => {
-                            setEdited(-1);
-                            console.log('input:' + todoObj.msg);
-                        }}
-                        defaultValue={todoObj.msg}
-                    />
+                    {(edited as TodoItemType).id === todoObj.id && (
+                        <input
+                            onBlur={updateTodo}
+                            value={newMsg}
+                            onChange={(e) => setTemMsg(e.target.value)}
+                        />
+                    )}
                 </div>
             ))}
         </Row>

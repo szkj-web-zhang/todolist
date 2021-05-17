@@ -21,7 +21,6 @@ export default (state = initState, action: types.TodoListActionTypes): types.Tod
             return {
                 todoList: state.todoList.map((todoObj) => {
                     todoObj.select = todoObj.id === action.payload;
-                    console.log(todoObj.select);
                     return {
                         ...todoObj,
                     };

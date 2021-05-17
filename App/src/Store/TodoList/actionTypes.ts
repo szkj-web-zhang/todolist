@@ -52,6 +52,10 @@ interface removeTodoAction {
     type: typeof ACTION_TYPE.REMOVE_TODO;
 }
 
+/**
+ * This action will update a todolist
+ * @param {TodoItemType} payload update a todolist
+ */
 interface updateTodoAction {
     type: typeof ACTION_TYPE.UPDATE_TODO;
     payload: TodoItemType;

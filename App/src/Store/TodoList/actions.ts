@@ -33,4 +33,13 @@ const selectTodoAction = (payload: number): types.TodoListActionTypes => ({
     payload,
 });
 
-export { addTodoAction, selectTodoAction, removeTodoAction };
+/**
+ * update a todo action
+ * @param payload
+ */
+const updateTodoAction = (payload: types.TodoItemType): types.TodoListActionTypes => ({
+    type: types.ACTION_TYPE.UPDATE_TODO,
+    payload,
+});
+
+export { addTodoAction, selectTodoAction, removeTodoAction, updateTodoAction };
